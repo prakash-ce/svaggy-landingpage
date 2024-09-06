@@ -3,13 +3,12 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBvGO6vFc89_k7LfaIbsv8pDYaGDNVv8Ys",
-  authDomain: "svaggyadv.firebaseapp.com",
-  projectId: "svaggyadv",
-  storageBucket: "svaggyadv.appspot.com",
-  messagingSenderId: "1008264718641",
-  appId: "1:1008264718641:web:953200bdb41f7c72a62810",
-  measurementId: "G-PN1YHVMETM",
+  apiKey: "AIzaSyAV4S-OyPZsiET0aaaxMum2ENM94ROs5Hg",
+  authDomain: "svaggy-test-e83a1.firebaseapp.com",
+  projectId: "svaggy-test-e83a1",
+  storageBucket: "svaggy-test-e83a1.appspot.com",
+  messagingSenderId: "875820394782",
+  appId: "1:875820394782:web:2ea72121948bb2d841c10f",
 };
 
 // Initialize Firebase

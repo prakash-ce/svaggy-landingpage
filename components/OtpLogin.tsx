@@ -1,6 +1,7 @@
 "use client";
 
 import { auth } from "@/firebase";
+import { FirebaseError } from "firebase/app";
 import {
   ConfirmationResult,
   RecaptchaVerifier,
@@ -97,25 +98,47 @@ function OtpLogin() {
         return setError("RecaptchaVerifier is not initialized.");
       }
 
+      // try {
+      //   const confirmationResult = await signInWithPhoneNumber(
+      //     auth,
+      //     phoneNumber,
+      //     recaptchaVerifier
+      //   );
+
+      //   setConfirmationResult(confirmationResult);
+      //   setSuccess("OTP sent successfully.");
+      // } catch (err: FirebaseError) {
+      //   console.log(err);
+      //   setResendCountdown(0);
+      //   if (err.code === "auth/invalid-phone-number") {
+      //     setError("Invalid phone number. Please check the number.");
+      //   } else if (err.code === "auth/too-many-requests") {
+      //     setError("Too many requests. Please try again later.");
+      //   } else {
+      //     setError("Failed to send OTP. Please try again.");
+      //   }
+      // }
+
       try {
         const confirmationResult = await signInWithPhoneNumber(
           auth,
           phoneNumber,
           recaptchaVerifier
         );
-
         setConfirmationResult(confirmationResult);
         setSuccess("OTP sent successfully.");
-      } catch (err: any) {
-        console.log(err);
+      } catch (err: unknown) {
         setResendCountdown(0);
-
-        if (err.code === "auth/invalid-phone-number") {
-          setError("Invalid phone number. Please check the number.");
-        } else if (err.code === "auth/too-many-requests") {
-          setError("Too many requests. Please try again later.");
+        if (err instanceof FirebaseError) {
+          if (err.code === "auth/invalid-phone-number") {
+            setError("Invalid phone number. Please check the number.");
+          } else if (err.code === "auth/too-many-requests") {
+            setError("Too many requests. Please try again later.");
+          } else {
+            setError("Failed to send OTP. Please try again.");
+          }
         } else {
-          setError("Failed to send OTP. Please try again.");
+          setError("An unknown error occurred.");
         }
       }
     });
